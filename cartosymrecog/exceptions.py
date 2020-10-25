@@ -1,0 +1,4 @@
+
+
+class SymbolNotFoundError(Exception):
+    pass
