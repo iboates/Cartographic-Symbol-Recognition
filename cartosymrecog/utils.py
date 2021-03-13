@@ -43,11 +43,23 @@ def random_squares_in_polygon(num, polygon, side_length):
     return squares
 
 
-def stamp_symbol(background, symbol, side_length_px, rotate):
+# def stamp_symbol(background, symbol, side_length_px, rotate):
+def stamp_symbol(background, symbol, top_left, rotate):
 
     if rotate:
         symbol = symbol.rotate(randint(0, 360), resample=Image.BICUBIC)
     symbol_width, symbol_height = symbol.size
-    top_left = (randint(0, int(side_length_px - symbol_width)), randint(0, int(side_length_px - symbol_height)))
+    # top_left = (randint(0, int(side_length_px - symbol_width)), randint(0, int(side_length_px - symbol_height)))
     background.paste(symbol, top_left, symbol)
     return background
+
+
+def get_stamp_coordinates(symbol, side_length_px):
+    """
+    Returns a tuple of two tuples, the first of which is the top left coordinate of the symbol (for stamping) and the
+    second of which is the center of the symbol for YOLOv3)
+    """
+    symbol_width, symbol_height = symbol.size
+    top_left = (randint(0, int(side_length_px - symbol_width)), randint(0, int(side_length_px - symbol_height)))
+    center = (top_left[0] + (symbol_width/2), top_left[1] + (symbol_width/2))
+    return top_left, center
